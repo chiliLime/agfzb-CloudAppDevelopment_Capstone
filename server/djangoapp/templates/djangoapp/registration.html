@@ -6,6 +6,58 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
     <body>
-    <!--Add a registration form here -->
+    <!-- Add header and nav bar -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Best Cars Dealership</a>
+                <a class="navbar-brand" href="{% url 'djangoapp:about' %}">About Us</a>
+                <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">Contact</a>
+            </div>
+            <!-- User login/out signup menu -->
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li>
+                    <a class="btn btn-link" href="#">{{ user.first_name }} ({{ user.username }})</a>
+                    <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li>
+                    <form class="form-inline" action="{% url 'djangoapp:login' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Username" name="username">
+                            <input type="password" class="form-control" placeholder="Password" name="psw">
+                            <button class="btn btn-primary" type="submit">Login</button>
+                            <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                        </div>
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Registration form-->
+    <form action="{% url 'djangoapp:registration' %}" method="POST">
+        <div class="container lead mt-5 text-left">
+            <h1>Sign Up</h1>
+            <hr>
+            <div class="card-columns-vertical" style="width: 18rem;">
+                <label for="username"><b>Username</b></label>
+                <input type="text" class="form-control" placeholder="Username" name="username" required>
+                <label for="firstname"><b>First Name</b></label>
+                <input type="text" class="form-control" placeholder="Firstname" name="firstname" required>
+                <label for="lastname"><b>Last Name</b></label>
+                <input type="text" class="form-control" placeholder="Lastname" name="lastname" required>
+                <label for="psw"><b>Password</b></label>
+                <input type="password" class="form-control" placeholder="Password" name="psw" required>
+            </div>
+            <div>
+                {% csrf_token %}
+                <button class="btn btn-primary mt-3" type="submit">Sign Up</button>
+            </div>
+        </div>
+    </form>
     </body>
 </html>
