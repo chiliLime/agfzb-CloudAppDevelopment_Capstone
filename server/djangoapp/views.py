@@ -29,6 +29,7 @@ def contact(request):
     context = {}
     return render(request, 'djangoapp/contact.html', context)
 
+
 # Create a `login_request` view to handle sign in request
 def login_request(request):
     if request.method == "POST":
@@ -76,6 +77,9 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
+        url = "https://eca74085.eu-gb.apigw.appdomain.cloud/dealerships/dealerships"
+        dealerships = get_dealers_from_cf(url)
+        context["dealership_list"] = dealerships
         return render(request, 'djangoapp/index.html', context)
 
 
