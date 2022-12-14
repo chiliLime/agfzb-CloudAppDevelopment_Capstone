@@ -5,6 +5,7 @@ on:
     branches: [master, main]
   pull_request:
     branches: [master, main]
+    
 
 jobs: # list of things to do
   lint_function_js:
@@ -63,3 +64,4 @@ jobs: # list of things to do
       - name: Lint with Pylint
         run: pylint *.py
         working-directory: server
+        
