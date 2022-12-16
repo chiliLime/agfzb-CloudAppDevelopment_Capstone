@@ -99,8 +99,10 @@ def get_dealer_details(request, id):
         reviews = get_dealer_reviews_from_cf(review_url, id=id)
         #print(reviews)
         context["reviews"] = reviews
-        #print('context for dealer_details', context)
+        context["current_page"] = "dealer_reviews"
+        print('context for dealer_details', context)
         return render(request, 'djangoapp/dealer_details.html', context)
+
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
@@ -120,12 +122,12 @@ def add_review(request, id):
         elif request.method == 'POST':
             if request.user.is_authenticated:
                 username = request.user.username
-                #print(request.POST)
+                print('POST method with: ',request.POST)
                 payload = dict()
                 car_id = request.POST["car"]
                 car = CarModel.objects.get(pk=car_id)
                 payload["time"] = datetime.utcnow().isoformat()
-                payload["name"] = username
+                payload["name"] = request.POST["name"]
                 payload["dealership"] = id
                 payload["id"] = id
                 payload["review"] = request.POST["content"]
@@ -133,10 +135,10 @@ def add_review(request, id):
                 if "purchasecheck" in request.POST:
                     if request.POST["purchasecheck"] == 'on':
                         payload["purchase"] = True
-                payload["purchase_date"] = request.POST["purchasedate"]
-                payload["car_make"] = car.make.name
-                payload["car_model"] = car.name
-                payload["car_year"] = int(car.year.strftime("%Y"))
+                        payload["purchase_date"] = request.POST["purchase_date"]
+                        payload["car_make"] = car.make.name
+                        payload["car_model"] = car.name
+                        payload["car_year"] = int(car.year.strftime("%Y"))
 
                 new_payload = {}
                 new_payload["review"] = payload

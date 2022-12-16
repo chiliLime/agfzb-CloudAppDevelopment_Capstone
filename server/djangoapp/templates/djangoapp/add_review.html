@@ -8,10 +8,10 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-
+    
 </head>
-    <body>
-        <!-- Add header and nav bar -->
+<body>
+    <!--Add a nav bar here -->
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -19,10 +19,14 @@
                 <a class="navbar-brand" href="{% url 'djangoapp:about' %}">About Us</a>
                 <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">Contact</a>
             </div>
+            
             <!-- User login/out signup menu -->
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li>
+                    {% if current_page == "dealer_reviews" %}
+                    <a class="btn btn-link" href="{% url 'djangoapp:add_review' dealer.id %}">Add Review</a>
+                    {% endif %}
                     <a class="btn btn-link" href="#">{{ user.first_name }} ({{ user.username }})</a>
                     <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
                 </li>
@@ -55,21 +59,23 @@
         <label for="car"><b>Which car did you buy?</b> (If purchased)</label><br>
         <select name="car" id="car" class="form-select" required>
             {% for car in cars %}
-                <option selected value="{{car.make}},{{car.id}},{{car.year}}">{{car.make}} {{car.name}} {{car.year|date:"Y" }}</option>
+            <!-- <option selected value="{{car.make}},{{car.id}},{{car.year}}">{{car.year|date:"Y" }} {{car.make}} {{car.name}}</option> -->
+            <option selected value="{{car.id}}">{{car.year|date:"Y" }} {{car.make}} {{car.name}}</option>
             {% endfor %}
-       </select><br><br>
-       <label for="purchase_date"><b>Select Your Purchase Date:</b></label>
-       <input class="date-own form-control w-25" type="text" name="purchase_date" id="purchase_date"><br>
-       <label for="name"><b>Name:</b></label>
-       <input class="form-control" type="text" placeholder="John Doe" name="name" required><br>
-       <button class="btn btn-dark" type="submit">Submit Review</button>
+        </select><br><br>
+        <label for="purchase_date"><b>Select Your Purchase Date:</b></label>
+        <!-- <input class="date-own form-control w-25" type="text" name="purchase_date" id="purchase_date" format="mm/dd/yyyy"><br> -->
+        <input type="date" name="purchase_date" id="purchase_date"> <br>
+        <input class="form-control" type="text" placeholder="John Doe" name="name" required><br>
+        <button class="btn btn-dark" type="submit">Submit Review</button>
+    </form>
 
-    </body>
+</body>
 
-    <script type="text/javascript">
-        $('.date-own').datepicker({
-           format: 'mm/dd/yyyy'
-         });
-   </script>
+<script type="text/javascript">
+    $('.date-own').datepicker({
+     format: 'mm/dd/yyyy'
+ });
+</script>
 
 </html>

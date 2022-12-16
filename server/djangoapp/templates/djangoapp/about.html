@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </head>
 <body>
-    <!-- Add header and nav bar -->
+    <!--Add a nav bar here -->
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -14,10 +14,14 @@
                 <a class="navbar-brand" href="{% url 'djangoapp:about' %}">About Us</a>
                 <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">Contact</a>
             </div>
+            
             <!-- User login/out signup menu -->
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li>
+                    {% if current_page == "dealer_reviews" %}
+                    <a class="btn btn-link" href="{% url 'djangoapp:add_review' dealer.id %}">Add Review</a>
+                    {% endif %}
                     <a class="btn btn-link" href="#">{{ user.first_name }} ({{ user.username }})</a>
                     <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
                 </li>
@@ -37,6 +41,7 @@
             </ul>
         </div>
     </nav>
+    
     <!-- Page contents -->
     <h1>
         Welcome to Best Cars dealership, home to the best cars in North America. We sell domestic and imported cars at reasonable prices.

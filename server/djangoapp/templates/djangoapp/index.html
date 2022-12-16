@@ -13,7 +13,7 @@
 
 </head>
 
-    <body>
+<body>
     <!--Add a nav bar here -->
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
@@ -27,6 +27,9 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li>
+                    {% if current_page == "dealer_reviews" %}
+                    <a class="btn btn-link" href="{% url 'djangoapp:add_review' dealer.id %}">Add Review</a>
+                    {% endif %}
                     <a class="btn btn-link" href="#">{{ user.first_name }} ({{ user.username }})</a>
                     <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
                 </li>
@@ -62,24 +65,24 @@
         </thead>
         <tbody>
             {% for dealer in dealerships %}
-                <tr>
-                    <td>{{dealer.id}}</td>
-                    <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</a></td>
-                    <td>{{dealer.city}}</td>
-                    <td>{{dealer.address}}</td>
-                    <td>{{dealer.zip}}</td>
-                    <td>{{dealer.st}}</td>
-                </tr>
+            <tr>
+                <td>{{dealer.id}}</td>
+                <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</a></td>
+                <td>{{dealer.city}}</td>
+                <td>{{dealer.address}}</td>
+                <td>{{dealer.zip}}</td>
+                <td>{{dealer.st}}</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    </body>
+</body>
 
-    <script>
-        $(function() {
-          $('#table').bootstrapTable()
-        })
-      </script>
+<script>
+    $(function() {
+      $('#table').bootstrapTable()
+  })
+</script>
 
 </html>
