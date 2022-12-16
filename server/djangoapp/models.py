@@ -15,7 +15,8 @@ class CarMake(models.Model):
     country = models.CharField(max_length=100)
     # print object
     def __str__(self):
-        return self.name + ": " + self.description
+        #return self.name + ": " + self.description
+        return self.name
 
 
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:

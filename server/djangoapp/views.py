@@ -91,18 +91,16 @@ def get_dealerships(request):
 def get_dealer_details(request, id):
     if request.method == "GET":
         context = {}
-        url = "https://us-south.functions.appdomain.cloud/api/v1/web/0364ce86-d18b-454f-9020-55730873902d/dealership-package/get-dealership"
-        dealer = get_dealer_by_id_from_cf(url, id=id)
-        context["dealer"] = dealer
+        dealer_url = "https://us-south.functions.appdomain.cloud/api/v1/web/0364ce86-d18b-454f-9020-55730873902d/dealership-package/get-dealership"
+        dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
         #print(context)
-    
+        context["dealer"] = dealer
         review_url = "https://us-south.functions.appdomain.cloud/api/v1/web/0364ce86-d18b-454f-9020-55730873902d/dealership-package/get-review"
         reviews = get_dealer_reviews_from_cf(review_url, id=id)
         #print(reviews)
         context["reviews"] = reviews
         #print('context for dealer_details', context)
         return render(request, 'djangoapp/dealer_details.html', context)
-
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
